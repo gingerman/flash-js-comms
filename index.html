@@ -1,0 +1,45 @@
+﻿ <html lang="en">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>ExternalInterfaceExample</title>
+ <script language="JavaScript">
+     var jsReady = false;
+     function isReady() {
+
+     	document.getElementById("ExternalInterfaceExample").sendToActionScript('Starting');
+         return jsReady;
+     }
+     function pageInit() {
+         jsReady = true;
+         document.forms["form1"].output.value += "\n" + "JavaScript is ready.\n";
+     }
+     function sendToActionScript(value) {
+       document.getElementById("ExternalInterfaceExample").sendToActionScript(value);
+     }
+     function sendToJavaScript(value) {
+         document.forms["form1"].output.value += "ActionScript says: " + value + "\n";
+     }
+
+
+ </script>
+ </head>
+ <body onload="pageInit();">
+ 
+  <object id="ExternalInterfaceExample"  name="ExternalInterfaceExample" 
+  type="application/x-shockwave-flash" data="flash-js-comms.swf" width="550" height="400">
+    <param name="movie" value="flash-js-comms.swf"/>
+    <param name="quality" value="high"/>
+    <param name="allowscriptaccess" value="always"/>
+    <a href="http://www.adobe.com/go/getflash">
+        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
+    </a>
+  </object>
+ 
+     <form name="form1" onsubmit="return false;">
+         <input type="text" name="input" value="" />
+         <input type="button" value="Send" onclick="sendToActionScript(this.form.input.value);" /><br />
+         <textarea cols="60" rows="20" name="output" readonly="true">Initializing...</textarea>
+     </form>
+ 
+ </body>
+ </html>
