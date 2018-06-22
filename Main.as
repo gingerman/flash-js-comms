@@ -18,14 +18,14 @@
 			
             ExternalInterface.addCallback("receiveText", receiveText);
 		
-            anonymous();   //set up the anonymous functions
+            setupExternalInterface();
         }
 		
 		public function receiveText(value:String):void {
             outputTF.appendText(value ) ;
         }
 		
-        public function anonymous():void {
+        public function setupExternalInterface():void {
             //see how we're defining a function inside another function?
             ExternalInterface.addCallback("anon", function(){
                 outputTF.appendText( "Do something sexy!");
@@ -41,7 +41,7 @@
 			addChild( containerMC );
 			outputTF = new TextField();
 			outputTF.width = 300;
-			outputTF.height = 900;
+			outputTF.height = 300;
 			outputTF.x = 5;
 			outputTF.y = 5;
 			containerMC.addChild(outputTF);

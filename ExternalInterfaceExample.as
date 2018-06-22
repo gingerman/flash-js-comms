@@ -20,60 +20,42 @@
         {
             // constructor code
             Security.allowDomain("*");
-			            
-            input = new TextField();
-            input.type = TextFieldType.INPUT;
-            input.background = true;
-            input.border = true;
-            input.width = 350;
-            input.height = 18;
-            addChild(input);
 			
             output = new TextField();
             output.y = 25;
-            output.width = 500;
-            output.height = 800;
+            output.width = 350;
+            output.height = 25;
             output.multiline = true;
             output.wordWrap = true;
             output.border = true;
             output.text = "Initializing...\n";
             addChild(output);
-			
-			sendBtn = new Sprite();
-            sendBtn.mouseEnabled = true;
-            sendBtn.x = input.width + 10;
-            sendBtn.graphics.beginFill(0xccccff);
-            sendBtn.graphics.drawRoundRect(0, 0, 80, 18, 10, 10);
-            sendBtn.graphics.endFill();
-            sendBtn.addEventListener(MouseEvent.CLICK, clickHandler);
-            addChild(sendBtn);
-            
-            
+
             if (ExternalInterface.available) {
                 try {
-                    output.appendText("Adding callback...\n");
+                    output.text ="Adding callback...\n";
                     ExternalInterface.addCallback("sendToActionScript", receivedFromJavaScript);
                     if (checkJavaScriptReady()) {
-                        output.appendText("JavaScript is ready.\n");
+                        output.text ="JavaScript is ready.\n";
                     } else {
-                        output.appendText("JavaScript is not ready, creating timer.\n");
+                        output.text ="JavaScript is not ready, creating timer.\n";
                         var readyTimer:Timer = new Timer(750, 0);
                         readyTimer.addEventListener(TimerEvent.TIMER, timerHandler);
                         readyTimer.start();
                     }
                 } catch (error:SecurityError) {
-                    output.appendText("A SecurityError occurred: " + error.message + "\n");
+                    output.text ="A SecurityError occurred: " + error.message + "\n";
                 } catch (error:Error) {
-                    output.appendText("An Error occurred: " + error.message + "\n");
+                    output.text ="An Error occurred: " + error.message + "\n";
                 }
             } else {
-                output.appendText("External interface is not available for this container.");
+                output.text ="External interface is not available for this container.";
             }
         }
 		
 		
         private function receivedFromJavaScript(value:String):void {
-            output.appendText("JavaScript says: " + value + "\n");
+            output.text ="JavaScript says: " + value + "\n";
         }
 		
 		
@@ -82,20 +64,21 @@
             return isReady;
         }
         private function timerHandler(event:TimerEvent):void {
-            output.appendText("Checking JavaScript status...\n");
+            output.text ="Checking JavaScript status...\n";
             var isReady:Boolean = checkJavaScriptReady();
             if (isReady) {
-                output.appendText("JavaScript is ready.\n");
-                output.appendText("ExternalInterface.objectID = " + ExternalInterface.objectID + "\n");
+                output.text ="JavaScript is ready.\n";
+                output.text ="ExternalInterface.objectID = " + ExternalInterface.objectID + "\n";
                 Timer(event.target).stop();
             }
         }
-        private function clickHandler(event:MouseEvent):void {
+		/*
+			private function clickHandler(event:MouseEvent):void {
 			
-			output.appendText("click");
+			output.text ="click";
             if (ExternalInterface.available) {
                 ExternalInterface.call("sendToJavaScript", input.text);
             }
-        }
+        }*/
     }
 }
